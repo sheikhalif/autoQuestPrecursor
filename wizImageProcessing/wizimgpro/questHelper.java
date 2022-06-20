@@ -2,17 +2,21 @@ import java.util.*;
 import java.lang.*;
 import java.io.*;
 import java.awt.*;
+import javax.imageio.*;
 
 public class questHelper{
   public static void main(String args[]){
     boolean active = true;
-    Robot displayInfo;
+    Rectangle displayInfo;
+    BufferedImage image;
     try{
-      displayInfo = new Robot();
+      displayInfo = new Rectangle(600, 400, 600, 580);
+      image = robot.createScreenCapture(displayInfo);
       while (true){
+        System.out.println("Working");
         if (active){
           System.out.println(movement(displayInfo));
-          displayInfo.delay(1000);
+          //displayInfo.delay(1000);
         }
       }
     }
@@ -33,9 +37,9 @@ public class questHelper{
   public static int movement(Robot theRobot){
     int minY = 1080;
     int pointX = 0;
-    for (int i = 600; i < 1200; i++){
-      for (int x = 400; x < 980; x++){
-        if (matchesYellow(theRobot.getPixelColor(i,x))){
+    for (int i = 0; i < image.getWidth(); i++){
+      for (int x = 0; x < iamge.getHeight(); x++){
+        if (matchesYellow(image.getRGB(i,x))){
           if (x < minY){
             minY = x;
             pointX = i;
@@ -43,6 +47,7 @@ public class questHelper{
         }
       }
     }
+    System.out.println("PointX : " + pointX);
     if (pointX < 540)return 0;
     if (pointX > 540)return 1;
     return 2;
