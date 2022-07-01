@@ -1,29 +1,28 @@
 import java.util.*;
 import java.lang.*;
-import java.io.*;
-import java.awt.*;
-import javax.imageio.*;
+import java.awt.Color;
+import java.awt.Robot;
+import java.awt.AWTException;
 
 public class questHelper{
   public static void main(String args[]){
     boolean active = true;
-    Rectangle displayInfo;
-    BufferedImage image;
     try{
-      displayInfo = new Rectangle(600, 400, 600, 580);
-      image = robot.createScreenCapture(displayInfo);
-      while (true){
-        System.out.println("Working");
-        if (active){
-          System.out.println(movement(displayInfo));
-          //displayInfo.delay(1000);
+      Robot robot = new Robot();
+      while (active){
+        System.out.println("Running");
+        for (int i = 850; i < 1050; i++){
+          for (int x = 850; x < 1000; x++){
+            if (matchesYellow(robot.getPixelColor(i,x))){
+              System.out.println("Yellow found at: " + i + ", " + x);
+            }
+          }
         }
       }
     }
-    catch(Exception x){
-      System.out.println("exception");
+    catch (AWTException e){
+      e.printStackTrace();
     }
-
 
   }
 
@@ -34,22 +33,4 @@ public class questHelper{
     return false;
   }
 
-  public static int movement(Robot theRobot){
-    int minY = 1080;
-    int pointX = 0;
-    for (int i = 0; i < image.getWidth(); i++){
-      for (int x = 0; x < iamge.getHeight(); x++){
-        if (matchesYellow(image.getRGB(i,x))){
-          if (x < minY){
-            minY = x;
-            pointX = i;
-          }
-        }
-      }
-    }
-    System.out.println("PointX : " + pointX);
-    if (pointX < 540)return 0;
-    if (pointX > 540)return 1;
-    return 2;
-  }
 }
